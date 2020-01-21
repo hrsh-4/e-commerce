@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div align='center'>
+
+    <h1>{{item.item_name}}</h1>
+</div>
+
+
+
+
+<div class="container card">
+    <img src={{item.item_image}} alt="Card image cap" width="400px" height="500px" center>
+    <div class="card-body">
+        <button class="btn btn-dark">{{object.get_item_category_display}}</button>
+        <button class="btn btn-{{object.get_item_label_display}}">Best seller</button>
+
+
+        <p class="card-text">{{item.item_description}}</p>
+        {% if item.item_discounted_price %}
+
+        <a class="btn btn-primary"><del>Rs. {{item.item_price}}</del></a>
+
+        <a class="btn btn-info">Rs. {{item.item_discounted_price}}</a>
+        <button type="button" class="btn btn-outline-success">{{item.item_discount}}% Discount !!!</button>
+
+        {% else %}
+        <a class="btn btn-primary">Rs. {{item.item_price}}</a>
+        {% endif %}
+        <a href={{ object.get_add_to_cart_url }} class="btn btn-success" id='add'>Add to cart</a>
+        <a href={{ object.get_remove_from_cart_url }} id='remove' class="btn btn-danger">Remove
+            from cart</a>
+
+    </div>
+
+
+</div>
+
+
+
+
+{% endblock %}

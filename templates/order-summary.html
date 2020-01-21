@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    td {
+        text-align: center;
+        vertical-align: center;
+    }
+</style>
+
+<h2>
+    Order Summary
+</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#####</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Item Quantity</th>
+            <th scope="col">Item Price</th>
+            <th scope="col">Total Item Price</th>
+        </tr>
+    </thead>
+    {% if object %}
+
+    {% for order_item in object.order_items.all %}
+
+    <tr>
+        <td scope='row'><a href={% url 'core:product' order_item.order_item.slug %}><img
+                    src={{order_item.order_item.item_image}} alt="" width="100px" height="100px"></a></td>
+        <td><br><br><a href={% url 'core:product' order_item.order_item.slug %}>{{order_item.order_item.item_name}}</a>
+        </td>
+        <td><br><br> <a href="{% url 'core:remove-single-item-from-cart' order_item.order_item.slug %}">
+                <i class="fas fa-minus-circle"></i>
+
+            </a>
+
+            &nbsp;&nbsp;{{order_item.item_quantity}} &nbsp;
+
+
+            <a href={% url 'core:add-to-cart' order_item.order_item.slug %}>
+                <i class="fas fa-plus-circle"></i>
+            </a>
+        </td>
+
+        <td><br><br>{{order_item.order_item.get_item_price}}</td>
+        <td><br><br>{{order_item.get_total_item_price}}
+            &nbsp;&nbsp;&nbsp;
+            {% if order_item.get_total_savings %}
+            <span class="badge badge-pill badge-success">Total Savings : Rs.{{ order_item.get_total_savings}}!!!</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% empty %}
+
+    <tr>
+        <th colspan='4'>Your cart is empty </th>
+
+    </tr>
+
+
+    {% endfor %}
+
+    {% else %}
+
+    <div class="jumbotron">
+        <h1>Your cart is empty</h1>
+    </div>
+
+
+
+
+
+    {% endif %}
+
+
+
+
+    <tr>
+        <th colspan='4'>Cart Total </th>
+        <th>Rs.{{object.get_cart_total}}</th>
+    </tr>
+
+
+</table>
+
+<a float='right' class="btn btn-primary float-right" href={% url 'core:checkout' %}>Proceed to
+    checkout &nbsp; <i class="fas fa-long-arrow-alt-right"></i></a>
+<a href="/" class="btn btn-default"><i class="fas fa-long-arrow-alt-left"></i> &nbsp; Continue shopping...</a>
+
+
+{% endblock %}

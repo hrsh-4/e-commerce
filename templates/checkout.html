@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1>Checkout</h1>
+
+<form action="/payment/stripe/">
+    {% csrf_token %}
+    {{form|crispy}}
+    <a href="/payment/stripe/" class="btn btn-default" href=''>Proceed to checkout..</a>
+</form>
+
+{% endblock %}

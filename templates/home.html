@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+
+<div class="alert alert-{{ messages.tags }} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+</div>
+
+
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <div class="alert alert-{{ messages.tags }} alert-dismissible" style=" background: coral; width: 100%;"
+        role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+<style>
+    .card {
+        width: 100%;
+    }
+
+    img {
+        align-self: center;
+    }
+</style>
+
+{% for item in object_list %}
+
+
+<div class="container">
+    <div class="container card">
+        <img src={{item.item_image}} alt="Card image cap" width="400px" height="500px">
+        <div class="card-body">
+            <a href={{item.get_absolute_url}}>
+                <h5 class="card-title">{{item.item_name}}</h5>
+            </a>
+            <p class="card-text">{{item.item_description}}</p>
+            {% if item.item_discounted_price %}
+
+            <a class="btn btn-default"><del>Rs. {{item.item_price}}</del></a>
+
+            <a class="btn btn-primary">Rs. {{item.item_discounted_price}}</a>
+            <button type="button" class="btn btn-outline-success">{{item.item_discount}}% Discount !!!</button>
+
+            {% else %}
+            <a class="btn btn-primary">Rs. {{item.item_price}}</a>
+            {% endif %}
+
+
+        </div>
+    </div>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+</div>
+
+{% endfor %}
+
+{% endblock %}
